@@ -1,0 +1,142 @@
+\documentclass[12pt]{report}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage[english]{babel}
+\graphicspath{ images/ }
+\usepackage[utf8]{inputenc}
+%\usepackage{subfigure}
+\usepackage{wrapfig}
+\usepackage[labelfont=bf]{caption}
+\usepackage[font=small]{caption}
+\usepackage{subcaption}
+\usepackage{amsfonts}
+\usepackage{csquotes}
+\usepackage{amssymb}
+\usepackage{titlesec}
+\usepackage{verbatim}
+\usepackage{wrapfig}
+\usepackage{tikz}
+\usetikzlibrary{shapes.misc, positioning}
+\usetikzlibrary{shapes,fit}
+\usepackage{mathtools}
+\usepackage{physics}
+\usepackage{float}
+\usepackage[ruled]{algorithm2e}
+%\usetikzlibrary{positioning,arrows.meta,shapes.geometric}
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric,matrix,chains,positioning,decorations.pathreplacing,arrows}
+\usepackage[official]{eurosym}
+\usepackage{pdfpages}
+\usepackage{bm}
+\usepackage{wrapfig}
+\usepackage{afterpage}
+\usepackage[backend=biber, citestyle=authoryear, maxcitenames=1, style=apa]{biblatex}
+% style=alphabetic
+
+% Set the font to Calibri
+\usepackage{fontspec}
+%\setmainfont[Ligatures=TeX]{Calibri Regular.ttf}
+\setmainfont{Calibri}[ 
+Extension = .ttf,
+UprightFont = * Regular,
+BoldFont = * Bold,
+ItalicFont = * Italic,
+BoldItalic = * Bold Italic,
+LightItalic = * Light Italic]
+
+\renewcommand{\baselinestretch}{1.16}
+
+%\usepackage{geometry}
+%\addtolength{\evensidemargin}{0.2cm}
+%\addtolength{\marginparwidth}{-1cm}
+\usepackage{geometry}
+\geometry{
+a4paper,
+total={140mm,210mm},
+left=25mm,
+right=25mm,
+top=25mm,
+bottom=30mm
+}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+\fancyhf{}
+\fancyhead[L]{\thesection \, \rightmark}
+\fancyhead[R]{\thepage}
+
+\begin{comment}
+\usepackage[
+    natbib=true,
+    style=numeric,
+    sorting=none]
+    {biblatex}
+\addbibresource{sample.bib}
+\end{comment}
+
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
+
+% Set paragraph indent
+\setlength{\parindent}{0mm}
+
+% Add bibliography
+\addbibresource{bibliography.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%% Start of thesis document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+
+
+% Title page pdf import
+\includepdf[pages=1]{images/titelblad.pdf}
+
+% One double-sided blank page
+\afterpage{\blankpage}
+
+%\printbibliography[title = {Referenties}]
+
+% Introduction
+\input{preamble.tex}
+\listoffigures
+\listoftables
+\input{abstract.tex}
+\input{contents.tex}
+\input{abbreviations.tex}
+
+% Body
+\input{introduction.tex}
+
+\part{Literature}
+\input{bayes.tex}
+%\input{whole-genome-duplications.tex}
+\input{variational-inference.tex}
+
+\part{Experiments}
+\input{aims.tex}
+\input{results.tex}
+\input{conclusion.tex}
+
+% Materials and methods
+\input{methods.tex}
+
+% Lists
+\clearpage
+
+% Bibliography
+%\input{bib.tex}
+\printbibliography
+
+% Appendix
+\appendix
+\input{implementation.tex}
+
+\afterpage{\blankpage}
+\includepdf[pages=1]{images/titelblad.pdf}
+
+\end{document}

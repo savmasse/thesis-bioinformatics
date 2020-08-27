@@ -1,0 +1,43 @@
+\chapter{Bayesian inference}
+
+\section{Introduction}
+\par Bayesian inference is a form of statistical inference which applies Bayes' theorem (Equation \ref{eq:bayes-theorem})\footnote{Note that throughout this thesis we will assume that the variables are continuous, and will use the appropriate symbolic conventions for this assumption (e.g. probability functions are written with a small $p$).} in order to infer the latent variables of a statistical model. Each of the terms in the equation have a specific name:
+
+\begin{itemize}
+    \item     $x$: \textit{data} \vspace{-10pt}
+    \item     $y$: latent model variables \vspace{-10pt}
+    \item     $p(x)$: \textit{marginal likelihood}, sometimes called the \textit{evidence} \vspace{-10pt}
+    \item     $p(y)$: \textit{prior} of y \vspace{-10pt}
+    \item     $p(x|y)$: \textit{likelihood} \vspace{-10pt}
+    \item     $p(y|x)$  \textit{posterior}
+\end{itemize}
+
+\vspace{-1cm}
+\begin{equation}
+    \label{eq:bayes}
+    \begin{split}
+        p(x, y) = \; & p(x) \, p(y|x) \\
+        \; = \, & p(y) \, p(x|y) \\
+    \end{split}
+\end{equation}
+
+\begin{equation} \label{eq:bayes-theorem}
+    p(y|x) = \, \frac{p(y) \, p(x|y)}{p(x)}
+\end{equation}
+
+\newpage
+\section{Markov Chain Monte Carlo (MCMC)}
+
+This section will very extremely review Markov chain Monte Carlo, its terminology and its application in bioinformatics, but since it is not the main focus of this thesis we will not see any in-depth algorithms here.
+
+\subsection{Markov chain Monte Carlo}
+A Markov chain is a stochastic model where the probability of a future event is dependent entirely on the current state and nothing else. Monte Carlo simulation is the term for the modelling of complex systems by generating random variables. MCMC is a large family of algorithms, which generally work by generating random samples (Monte Carlo) based on the previous state (Markov chain) and either accepting or rejecting the generated sample based on some criteria. One of the simplest MCMC algorithms is Metropolis-Hastings, but much more complex variants have been developed. 
+
+\medskip
+\par The plot of the values of a latent model variable for each step of the chain is called the \textit{trace}, and is used to plot the eventual distribution. Often the first 1000 or so samples are thrown out because the algorithm has not really gotten close to the true distribution yet; this is called the \textit{burn-in}.
+
+\medskip
+\par The great advantage of MCMC methods is that as they are theoretically guaranteed to converge to the true posterior, they are the most accurate Bayesian inference methods that exist. But a major drawback is that the process has an asymptotic character: the longer it runs, the slower the improvement \parencite{mcmc}. This is why MCMC may not always be practical; sometime it just isn't possible to wait for the eventual convergence. A faster Bayesian inference technique such as variational inference may prove useful even when it is less accurate.
+
+\medskip
+\par Bayesian probabilistic modelling is very common in bioinformatics, and as a result MCMC is in common use. More specifically, in phylogenetics it is used in \textit{MrBayes} \parencite{mrbayes}. It is also used in the phylogenetic libraries developed at the VIB that will be used later in this thesis. MCMC is the most common method of Bayesian inference in use in bioinformatics and will be used as the gold standard in comparisons with the proposed variational inference algorithms.

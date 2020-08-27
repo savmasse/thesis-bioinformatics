@@ -1,0 +1,61 @@
+
+\begin{comment}
+
+\chapter{QuPath implementation details}
+
+\section{Introduction}
+The active learning technique discussed in 
+this thesis was implemented as a QuPath extension.
+
+\section{Implementation}
+\par Java is one of the most popular programming languages for application development. It is, however, not very popular for scientific computing. Python has recently become the go-to language for image-processing and machine learning, mainly because the scientific libraries are open-source so that researchers can easily add their contributions. 
+
+\par All simulations during this thesis were run in Python because it allows for much easier prototyping. The OpenCV library   \cite{open-cv} was used both in the python code as in the java implementation, so performance will be very similar if not exactly the same in most cases. Both libraries are essentially ports of the original C++ OpenCV library.
+
+\end{comment}
+
+\chapter{QuPath extension: instructions}
+
+\section{Introduction}
+This appendix contains instructions for the end user and is included for completeness. Please note that the layout of the user interface (UI) and the workflow may still change before the final presentation.
+
+\section{Installation}
+The process of installation for the extension is exactly the same as that of other QuPath extensions. The user should either drag the .jar file onto the main QuPath window or directly place it in the extensions folder. The source code for this project is available at "https://github.com/savmasse/qupath-extension-tunel". A jar file can be compiled from these project files.  
+
+\section{Workflow}
+
+\subsection{Segmentation}
+Before classification the user should perform a segmentation using the technique they would regularly use. This could be a watershed segmentation in QuPath or any segmentation method used through the ImageJ extension.
+
+\subsection{Pick training samples}
+The user can select the initial training samples in the regular way (by creating annotations and setting their class) or by using the tool included in the extension. The latter method works as follows: first select cells/nuclei with while holding $ALT$ so you can select multiple. Then set their class with the "Select Cells" option in the extension menu.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=90mm]{images/manual/al-window.PNG}
+    \caption{Active learning window}
+    \label{fig:al-window}
+\end{figure}
+
+\subsection{Feature selection}
+Select the features to be used in the clustering by pressing the "select features" button in the AL window (see Figure \cite{fig:al-window}).
+
+\subsection{Clustering}
+First set the slider for the amount of clusters in the active learning window. The experiments in this thesis have shown that 10 clusters is a good number. Now press the button to execute the clustering. The first clustering will happen virtually instantaneously.
+
+\subsection{Feedback loop}
+At this point in the process the feedback loop commences. Samples will be proposed in the way described in Chapter 7. The user can now make a class decision for each proposed sample in by either 'confirming' the current class label or setting a new label by selecting the new class in the list and pressing the 'change class' button. The next sample will be served automatically.
+
+\subsection{Classify}
+The user can choose to train the classifier with the current training samples at any point during the feedback loop by using the 'create classifier' window \ref{fig:class-window} in the usual manner. Always choose the option 'Random Trees' and the same features as in the active learning window. 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=90mm]{images/manual/classify.PNG}
+    \caption{Classifier window}
+    \label{fig:class-window}
+\end{figure}
+
+\subsection{Statistics}
+Class statistics can be obtained in the usual manner: by either using the 'detection measurements' window to write the data to a CSV file and do the work there, or by writing a custom script to immediately write the statistics to a CSV file.
+

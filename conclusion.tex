@@ -1,0 +1,37 @@
+\chapter{Discussion}
+
+
+\section{Discussion}
+
+In this thesis we reviewed the potential of variational Bayesian inference for use with the statistical models currently being developed at the VIB.
+\\
+Bayesian inference with MCMC is computationally intensive and often requires that an analysis be performed on only a subset of the data. In the phylogenetic models discussed in this thesis, only 1000 gene families are used in the analysis, whereas typically between 8000 and 10.000 are available after pre-processing of the data. For the sake of computational expediency the species trees typically only contain around 10 species.
+\medskip
+\par In this thesis we showed that variational inference techniques can be applied to provide fast approximate inference with results that are directly comparable to MCMC in terms of accuracy. These methods are sufficiently fast to allow the design of larger studies and to use the full available dataset rather than having to subsample for computational reasons.
+
+\medskip
+
+\par In the simulation we found that BBVI best approximated the MCMC, and that SVGD is largely useless for the Beluga model, because the model gradient is too computationally expensive. Perhaps it would be better suited to models where the gradient is not much more expensive than the joint likelihood of the model. There may be cases where the model gradient can be explicitly computed (without AD), but this would largely defeat the purpose of using a generic variational algorithm. The experiment with the high-quality rice data showed similar results: BBVI again slightly outperformed ADVI and was a bit faster. We found low duplication and loss rates in most of the branches, which is to be expected from closely related species.
+
+\medskip
+
+\par It is however unclear why the results of the PLAZA experiment lead to such tiny values for the duplication and loss rates. Perhaps this is because not enough data was used (only 250 gene families), a because of a mistake in the filtering of the data, or because the wrong prior was set. For computational reasons it was impossible to repeat the experiment with one of these factors modified. This should be investigated further in order to prove the validity of VI studies on larger species trees.
+
+\medskip
+
+\par The Whale experiment again demonstrated that BBVI was the most accurate method, and best approximated the MCMC gold standard. We note that when it comes to the WGD hypotheses, the differences between the ADVI result and MCMC are large enough for a researcher to draw a different conclusion from the two analyses. 
+
+\medskip
+
+\par From the experiments it appears that BBVI is a clear overall winner among the variational algorithms: it is both faster than ADVI and SVGD and more accurately approximates the MCMC gold standard. This is mainly because the BBVI does not use the model gradient and as such can use more MC samples without great computational cost.
+
+\section{Future work}
+The variational algorithms described in this thesis are those variants of the original algorithms that are currently used in other statistical packages. There exist more advanced variants of these methods in the academic literature which have been shown to be promising but have not yet been adopted by end users. There are variants of BBVI that use importance sampling and have been shown to improve convergence (\cite{bbvi-advances}).
+\medskip
+\par In this thesis the variational algorithms were limited to the mean-field normal variational family. While this is a strict limitation, the problems studied here deal mostly with latent variables that have lognormal distributions. The normal variational distribution in real-space becomes a lognormal after transforming with a transformation $\mathrm{T}$ so in this case the mean-field normal family is a very good choice. This may not be so for other phylogenetic models, so the effect of more complex variational families is something that should be studied more closely. 
+\medskip
+\par In addition to the uses demonstrated in this thesis, VI can also be applied for model selection, as the ELBO is an estimator for the marginal likelihood \cite{19}. The ELBO could then be used to determine which of two models best fits the data. For example, calculating the optimal ELBO (e.g. with BBVI) for two
+models using different species. If the models are optimised with the same data then we could say that the model with the largest ELBO fits the data best; and as a result that its species tree better represents the phylogenetic data.
+
+\section{Conclusion}
+\par In general, it is clear that variational inference will come to play a larger role in bioinformatics in this age of Big Data, where more and more high-quality genomes are available and researchers want to design ever larger studies. 

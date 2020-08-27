@@ -1,0 +1,13 @@
+
+\chapter{Aims}
+
+\section{Introduction}
+In this thesis we wish to demonstrate the usefulness of the variational approach to Bayesian inference. We aim to show that variational algorithms can provide approximate solutions that approach the accuracy of the MCMC methods that are traditionally used.
+\medskip 
+\par The following chapter contains the computational experiments that were performed to affirm that variational inference is indeed applicable in practical phylogenetic studies. First a simulated dataset of gene counts is studied with the Beluga phylogenetic model \parencite{beluga}. Doing so, we will infer the duplication and loss rates in each branch of a plant species tree of 9 species. Following this, the same process will be performed on several real-world datasets. A dataset of closely-related rice species is studied as an example of a real analysis. We also show that the variational method can be applied to much larger species trees than is traditionally possible with MCMC by performing an analysis on 44 species from the PLAZA 4.0 dicot dataset \parencite{PLAZA-paper-1}.
+\medskip
+\par Finally, in Section \ref{sec:whale} we demonstrate that variational inference is applicable to another example of a state-of-the-art phylogenetic model, namely the Whale model \parencite{whale} which we will use to infer whole genome duplications in the history of a plant species tree. This is a more complex model and as such is slower. This makes it a good candidate for variational inference since any speedup here would make a big difference for end users.
+
+\section{Acknowledgements}
+Several notable contributions were made by thesis supervisor Arthur Zwaenepoel, including the supplying of phylogenetic data and help with the initial setup of the Beluga and Whale Julia libraries. He also provided several finished MCMC analyses for comparison with the VI algorithms.
+

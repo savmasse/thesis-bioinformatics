@@ -1,0 +1,42 @@
+
+\chapter{Methods and materials}
+
+\section{Variational algorithms}
+The implementation of the variational inference algorithms of BBVI, ADVI and SVGD used in the experiments are available at \textit{https://github.com/savmasse/PhyloVI}. These implementations are identical to how they are described in the original papers (see Chapter \ref{sec:vi}), except that we chose to use the ADAM optimiser instead of the different optimisation algorithms that each paper suggests.
+
+\section{Phylogenetic models}
+
+
+\subsection{Beluga \parencite{beluga}}
+Beluga is a phylogenetic inference library that models the evolutionary history of a set of species with duplication and loss rates in each branch. All analyses in this thesis were performed with the  \textit{IidRevJumpPrior} prior as implemented in the Beluga library, each time using the exact same prior for VI and MCMC. The experiments were performed on a now outdated version of Beluga (commit \textit{92f2ab4ce4bc6df383a85f16666fd84d7d6d7f37} on the master branch). The MCMC algorithm used in the Beluga model was a reversible jump algorithm.
+ 
+\subsection{Whale \parencite{whale}}
+Whale.jl is a phylogenetic inference library that similarly describes the history of a species tree in terms of duplications, losses and larger whole genome duplication events. Experiments were performed on the mul branch of Whale as it stands at the time of writing (commit \textit{fbc0cc84ab9ae90efcec6c849ae76685a73d5a8e}) . This version of Whale used Hamiltonian Monte Carlo as its MCMC algorithm.
+
+
+\section{Data}
+
+In this section the origin and preprocessing of the data is discussed. If an experiment from Chapter \ref{sec:results} is not mentioned here that means the data was obtained as-is from my supervisor, and the exact pre-processing steps used could not be determined.
+
+
+\subsection{Rice dataset}
+\par
+\medskip
+\par The gene families used in the experiments using the Beluga model have always been filtered according to the following principle. Gene families that do not have at least one gene in the outgroup are filtered out. Additionally, those families that are extremely small (<10 genes) or extremely large (>100 genes) were also filtered out. 
+\medskip
+\par ADVI and BBVI were run for 1000 iterations with mini-batches of 100 samples, whereas the MCMC was run for 10,000 iterations (with 1000 burn-in) on the full dataset.
+
+\subsection{PLAZA dataset}
+The PLAZA dicot 4.0 dataset contains 55 plant species. However, not all of these species could be resolved into a noncontroversial bifurcating tree with the NCBI taxanomy browser \parencite{ncbi}; those that conflicted were dropped from the analysis, leaving 44 remaining species (Figure \ref{fig:PLAZA-trees}). The gene count data for the Beluga analysis was also obtained from the PLAZA database and filtered on gene family size (30<N<200).
+\\ 
+For computational reasons the data used in the experiment consists of a subset of only 250 gene families. The BBVI algorithm was run for 1000 iterations with mini-batches of 100 samples.
+
+\subsection{Whale dataset}
+The 500 ALE trees used in the Whale experiment were received from my supervisor and were already filtered. How the filtering was performed is unclear. Whale was run for 1000 iterations, while ADVI and BBVI were both run for 1000 iterations with mini-batches of 50 samples.
+
+
+\section{Computational resources}
+All computation times given in this document were obtained on a Dell XPS 15 (2018) with a i7-8750H CPU (2.2$\,$GHz base, 4.10$\,$GHz turbo), using all 6 cores in parallel. 
+
+\section{Code availability}
+The Julia code for the project is available at \textit{https://github.com/savmasse/PhyloVI}.  An export of the Overleaf LateX project code for this thesis document can be found at \\ \textit{https://github.com/savmasse/thesis-bioinformatics}.
